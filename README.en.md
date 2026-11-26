@@ -1,4 +1,4 @@
-# AngelaLink — a local bridge for any AI
+# AngelaLink — a local bridge for any AI (Chinese alias: 安渡 / Andu, "safe crossing")
 
 Let an AI work with files on your Windows PC inside folders you authorize,
 and optionally run project commands inside a write-restricted sandbox with
