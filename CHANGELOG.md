@@ -2,7 +2,16 @@
 
 [简体中文](CHANGELOG.md) · [English](CHANGELOG.en.md) · [返回 README](README.md)
 
-本文件记录 MuseLink / Muse连接器 的功能更新、安全加固与问题修复，随版本发布与推送同步维护。
+本文件记录 AngelaLink（安渡）的功能更新、安全加固与问题修复，随版本发布与推送同步维护。
+
+## [v0.3.0] - 2026-11-26
+
+### 自有化与中立化
+- **代码标识中立化**：源码目录与 crate 由 muse-connector 改名 angela-link，产品名 AngelaLink、应用标识换为自有命名；数据目录由 ~/.muse-bridge 迁至 ~/.angela-link（首启自动整目录迁移，旧目录保留，配置与令牌不失效）。
+- **令牌前缀换代**：新发 Agent 令牌前缀改为 ala_；旧前缀 mfa_ 过渡期双认——校验与审计日志脱敏同时覆盖两种形状，存量令牌继续有效。
+
+### 安全加固
+- **凭证保护清单扩围**：硬保护目录新增 .azure、.kube、.docker，以及浏览器密码库（Chrome、Edge、Brave 的 User Data 与 Firefox 配置目录）与 gcloud 凭证目录；旧数据目录 ~/.muse-bridge 在过渡期与新目录同级保护，命令策略的敏感路径标记同步覆盖新旧两个数据目录。
 
 ## [v0.2.1] - 2026-11-25
 

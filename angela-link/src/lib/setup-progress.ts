@@ -3,7 +3,7 @@ import type { Snapshot } from "@/lib/use-bridge";
 export type SetupVerification = { scope: string; alias: string; address: string; read: boolean };
 
 export function setupStorageKey(snapshot: Pick<Snapshot, "profile" | "home">) {
-  return `muse-connector:setup:${snapshot.profile}:${snapshot.home}`;
+  return `angela-link:setup:${snapshot.profile}:${snapshot.home}`;
 }
 
 export function readSetupVerification(key: string): SetupVerification | null {

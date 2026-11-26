@@ -22,7 +22,10 @@ use crate::profile::RuntimeProfile;
 
 const VERSION: u32 = 1;
 const AGENT_TOKEN_FILE: &str = "agent-token";
-const AGENT_TOKEN_PREFIX: &str = "mfa_";
+/// 新发 Agent 令牌前缀（自有化标识）。
+const AGENT_TOKEN_PREFIX: &str = "ala_";
+/// 上游旧令牌前缀：过渡期双认，校验与日志脱敏都覆盖，存量令牌不失效。
+const LEGACY_AGENT_TOKEN_PREFIX: &str = "mfa_";
 const INDEX_MARKER: &str = "search-index-state";
 
 #[derive(Clone, Copy, Serialize, PartialEq, Eq, Debug)]
@@ -1010,8 +1013,26 @@ fn production_protection(env: &SensitiveRoots) -> (Vec<PathBuf>, Vec<PathBuf>) {
     let mut protected = Vec::new();
     push_unique(&mut protected, env.profile_home.clone());
     if let Some(home) = &env.user_home {
-        for dir in [".ssh", ".aws", ".gnupg"] {
+        // 过渡期旧数据目录同样硬保护（与新目录同级）。
+        push_unique(&mut protected, home.join(".muse-bridge"));
+        // 凭证目录：云与容器工具链的本地凭证一律不进授权范围。
+        for dir in [".ssh", ".aws", ".gnupg", ".azure", ".kube", ".docker"] {
             push_unique(&mut protected, home.join(dir));
+        }
+    }
+    // 浏览器密码库与 gcloud 凭证（整个配置目录保护，覆盖全部浏览器 profile）。
+    if let Some(local) = &env.local_app_data {
+        for dir in [
+            r"Google\Chrome\User Data",
+            r"Microsoft\Edge\User Data",
+            r"BraveSoftware\Brave-Browser\User Data",
+        ] {
+            push_unique(&mut protected, local.join(dir));
+        }
+    }
+    if let Some(roaming) = &env.roaming_app_data {
+        for dir in [r"Mozilla\Firefox", "gcloud"] {
+            push_unique(&mut protected, roaming.join(dir));
         }
     }
 
@@ -1105,14 +1126,16 @@ fn load_agent_token(path: &Path) -> Option<String> {
         return None;
     }
     token::load(path).ok().filter(|secret| {
-        secret
+        // 新旧前缀双认：ala_（自有）与 mfa_（上游存量）都接受，主体同为 43 字符。
+        let body = secret
             .strip_prefix(AGENT_TOKEN_PREFIX)
-            .is_some_and(|value| {
-                value.len() == 43
-                    && value
-                        .bytes()
-                        .all(|b| b.is_ascii_alphanumeric() || b == b'-' || b == b'_')
-            })
+            .or_else(|| secret.strip_prefix(LEGACY_AGENT_TOKEN_PREFIX));
+        body.is_some_and(|value| {
+            value.len() == 43
+                && value
+                    .bytes()
+                    .all(|b| b.is_ascii_alphanumeric() || b == b'-' || b == b'_')
+        })
     })
 }
 

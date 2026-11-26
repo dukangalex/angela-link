@@ -297,22 +297,26 @@ fn is_token_byte(b: u8) -> bool {
 }
 
 fn redact_agent_tokens(value: &str) -> String {
-    const PREFIX: &str = "mfa_";
+    // 新旧前缀都脱敏：ala_（自有新发）与 mfa_（上游存量）。
+    redact_agent_tokens_with_prefix(&redact_agent_tokens_with_prefix(value, "ala_"), "mfa_")
+}
+
+fn redact_agent_tokens_with_prefix(value: &str, prefix: &str) -> String {
     const BODY_LEN: usize = 43;
-    const TOTAL_LEN: usize = PREFIX.len() + BODY_LEN;
+    let total_len = prefix.len() + BODY_LEN;
 
     let bytes = value.as_bytes();
     let mut out = String::with_capacity(value.len());
     let mut cursor = 0;
-    while let Some(offset) = value[cursor..].find(PREFIX) {
+    while let Some(offset) = value[cursor..].find(prefix) {
         let start = cursor + offset;
-        let end = start + TOTAL_LEN;
+        let end = start + total_len;
         let valid_before = start == 0 || !is_token_byte(bytes[start - 1]);
         let valid_after = end == bytes.len() || (end < bytes.len() && !is_token_byte(bytes[end]));
         if valid_before
             && end <= bytes.len()
             && valid_after
-            && bytes[start + PREFIX.len()..end]
+            && bytes[start + prefix.len()..end]
                 .iter()
                 .all(|&b| is_token_byte(b))
         {
@@ -320,7 +324,7 @@ fn redact_agent_tokens(value: &str) -> String {
             out.push_str("[已隐藏令牌]");
             cursor = end;
         } else {
-            let next = start + PREFIX.len();
+            let next = start + prefix.len();
             out.push_str(&value[cursor..next]);
             cursor = next;
         }

@@ -27,8 +27,8 @@ Highlights:
 Build from source (Windows, WebView2, Node 22.12+, pnpm, Rust MSVC):
 
 ```
-pnpm -C muse-connector install --frozen-lockfile
-pnpm -C muse-connector tauri build --bundles nsis
+pnpm -C angela-link install --frozen-lockfile
+pnpm -C angela-link tauri build --bundles nsis
 ```
 
 License: MIT (see LICENSE and THIRD_PARTY_NOTICES.md).

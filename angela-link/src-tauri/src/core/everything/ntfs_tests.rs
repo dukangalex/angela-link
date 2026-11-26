@@ -20,8 +20,8 @@ impl Drop for Fixture {
 #[ignore = "requires the running Everything Service and writable fixture directories on the fixed NTFS drives"]
 async fn official_ntfs_reuses_one_index_and_tracks_changes() {
     assert!(service_running());
-    let binaries = PathBuf::from(std::env::var_os("MUSE_CONNECTOR_EVERYTHING_QA").unwrap());
-    let fixture_dirs = std::env::var_os("MUSE_CONNECTOR_NTFS_QA_DIRS").unwrap();
+    let binaries = PathBuf::from(std::env::var_os("ANGELA_LINK_EVERYTHING_QA").unwrap());
+    let fixture_dirs = std::env::var_os("ANGELA_LINK_NTFS_QA_DIRS").unwrap();
     let fixtures: Vec<_> = std::env::split_paths(&fixture_dirs)
         .map(|parent| Fixture::new(&parent))
         .collect();
@@ -231,7 +231,7 @@ async fn verify_agent_search(engine: Everything, home: &Path, needle: &str, expe
         .await
         .unwrap();
     assert_eq!(response.status(), 401);
-    let request = if let Some(target) = std::env::var_os("MUSE_CONNECTOR_NTFS_QA_TARGET") {
+    let request = if let Some(target) = std::env::var_os("ANGELA_LINK_NTFS_QA_TARGET") {
         let target = PathBuf::from(target);
         assert!(target.is_file());
         serde_json::json!({"name": target.file_name().unwrap().to_str().unwrap(), "root":"drive-e"})
@@ -258,7 +258,7 @@ async fn verify_agent_search(engine: Everything, home: &Path, needle: &str, expe
             let hits = response["hits"].as_array().unwrap();
             if request.get("root").is_some() {
                 let target =
-                    PathBuf::from(std::env::var_os("MUSE_CONNECTOR_NTFS_QA_TARGET").unwrap());
+                    PathBuf::from(std::env::var_os("ANGELA_LINK_NTFS_QA_TARGET").unwrap());
                 let relative = target
                     .strip_prefix(r"E:\")
                     .unwrap()

@@ -2,7 +2,16 @@
 
 [简体中文](CHANGELOG.md) · [English](CHANGELOG.en.md) · [Back to README](README.en.md)
 
-This changelog tracks feature updates, security hardening, and bug fixes for MuseLink, kept in sync with repository pushes and releases.
+This changelog tracks feature updates, security hardening, and bug fixes for AngelaLink, kept in sync with repository pushes and releases.
+
+## [v0.3.0] - 2026-11-26
+
+### Self-ownership & neutralization
+- **Code identifiers neutralized**: source directory and crate renamed from muse-connector to angela-link; product name AngelaLink with its own app identifier; data directory moved from ~/.muse-bridge to ~/.angela-link (automatic whole-directory migration on first launch, legacy directory kept, config and tokens stay valid).
+- **Token prefix rotation**: newly issued agent tokens use the ala_ prefix; the legacy mfa_ prefix remains accepted during the transition — both validation and audit-log redaction cover both shapes, so existing tokens keep working.
+
+### Security hardening
+- **Credential protection expanded**: hard-protected directories now include .azure, .kube, .docker, browser credential stores (Chrome, Edge and Brave User Data, plus Firefox profiles) and the gcloud config directory; the legacy ~/.muse-bridge directory stays protected alongside the new one during the transition, and the command policy's sensitive-path markers cover both data directories.
 
 ## [v0.2.1] - 2026-11-25
 

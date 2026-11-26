@@ -28,7 +28,7 @@ const Settings = lazy(() => import("@/pages/settings"));
 const About = lazy(() => import("@/pages/about"));
 const SetupGuide = lazy(() => import("@/components/setup-guide"));
 const pages = [["overview", "概览"], ["connection", "连接"], ["roots", "文件权限"], ["logs", "日志"], ["settings", "设置"], ["about", "关于"]] as const;
-const legacyGuidePreference = "muse-connector:setup-in-progress";
+const legacyGuidePreference = "angela-link:setup-in-progress";
 
 function shouldResumeGuide(key: string, useLegacy: boolean) {
   try {

@@ -33,15 +33,15 @@ HTTP 接口（`/agent/v1`）接入。它不绑定任何一家 AI——Muse、其
 准备 Windows、WebView2、Node.js 22.12+、pnpm、Rust MSVC 工具链与 Visual Studio C++ Build Tools。
 
 ```
-pnpm -C muse-connector install --frozen-lockfile
-pnpm -C muse-connector tauri dev            # 开发模式（隔离配置）
-pnpm -C muse-connector build
-cargo test --manifest-path muse-connector/src-tauri/Cargo.toml --locked
-pnpm -C muse-connector tauri build --bundles nsis
+pnpm -C angela-link install --frozen-lockfile
+pnpm -C angela-link tauri dev            # 开发模式（隔离配置）
+pnpm -C angela-link build
+cargo test --manifest-path angela-link/src-tauri/Cargo.toml --locked
+pnpm -C angela-link tauri build --bundles nsis
 ```
 
-注：源码目录名与部分内部标识仍沿用上游的 muse-connector / muse-bridge 字样，
-属待办的中立化改造（见 ROADMAP），不影响功能与安全边界。
+注：v0.3.0 起源码目录、crate 与数据目录已完成中立化（angela-link / ~/.angela-link），
+旧数据目录 ~/.muse-bridge 首启自动迁移、旧令牌前缀 mfa_ 过渡期双认（见 docs/ROADMAP.md）。
 
 ## 许可证与致谢
 

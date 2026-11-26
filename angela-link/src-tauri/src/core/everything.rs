@@ -72,7 +72,7 @@ enum QueryResult {
 
 impl Everything {
     pub(super) fn discover(app_home: &Path, reuse_existing: bool) -> Option<Self> {
-        if std::env::var_os("MUSE_CONNECTOR_DISABLE_EVERYTHING").is_some() {
+        if std::env::var_os("ANGELA_LINK_DISABLE_EVERYTHING").is_some() {
             return None;
         }
         let binaries = std::env::current_exe().ok()?.parent()?.join("everything");
@@ -775,9 +775,9 @@ mod tests {
     }
 
     #[test]
-    #[ignore = "requires MUSE_CONNECTOR_EVERYTHING_QA pointing to the bundled official binaries"]
+    #[ignore = "requires ANGELA_LINK_EVERYTHING_QA pointing to the bundled official binaries"]
     fn official_named_ipc_scopes_unicode_results_and_accepts_offsets() {
-        let binaries = PathBuf::from(std::env::var_os("MUSE_CONNECTOR_EVERYTHING_QA").unwrap());
+        let binaries = PathBuf::from(std::env::var_os("ANGELA_LINK_EVERYTHING_QA").unwrap());
         let fixture = std::env::temp_dir().join(format!(
             "muse-everything-qa-{}",
             super::super::token::generate()

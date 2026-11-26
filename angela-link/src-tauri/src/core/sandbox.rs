@@ -887,7 +887,7 @@ fn build_clean_env(temp_dir: &Path) -> Vec<u16> {
     let mut vars: BTreeMap<String, (OsString, OsString)> = BTreeMap::new();
     for (k, v) in std::env::vars_os() {
         let upper = k.to_string_lossy().to_ascii_uppercase();
-        if upper.starts_with("MUSE_CONNECTOR_")
+        if upper.starts_with("ANGELA_LINK_")
             || upper.starts_with("MUSE_LINK_")
             || upper.contains("AGENT_TOKEN")
         {

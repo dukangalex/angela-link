@@ -1,5 +1,5 @@
-//! 真正监听临时端口验证 HTTP 契约，不加载 ~/.muse-bridge。
-use muse_connector_lib::core::{
+//! 真正监听临时端口验证 HTTP 契约，不加载生产数据目录。
+use angela_link_lib::core::{
     api::{self, ApiOptions, ApiState, BridgePaths},
     config::BridgeConfig,
     token,

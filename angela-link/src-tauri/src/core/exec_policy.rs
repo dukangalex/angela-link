@@ -584,7 +584,8 @@ fn inspect_shell_high_risk(command: &str) -> Vec<&'static str> {
     if lower.contains("..\\") || lower.contains("../") || has_token_any(&lower, &[".."]) {
         push("path_escape_attempt");
     }
-    if lower.contains(".muse-bridge")
+    if lower.contains(".angela-link")
+        || lower.contains(".muse-bridge")
         || lower.contains("\\.ssh")
         || lower.contains("/.ssh")
         || lower.contains("\\.aws")

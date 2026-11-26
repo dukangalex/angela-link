@@ -1,4 +1,5 @@
-//! 沿用 Python 版 `~/.muse-bridge/config.json` 的路径、字段和默认值。
+//! 自有数据目录 `~/.angela-link/config.json` 的路径、字段和默认值
+//! （格式源自上游 Python 版，字段保持兼容；旧目录 `~/.muse-bridge` 首启自动迁移）。
 //! 写回 UTF-8 无 BOM；严格字段类型与现存绝对目录校验属于有意收紧。
 
 use std::collections::BTreeMap;
@@ -24,10 +25,10 @@ fn default_port() -> u16 {
 
 impl Default for BridgeConfig {
     fn default() -> Self {
-        // 与 Python load_config 的兜底一致：默认只暴露 Documents\MuseBridge，只读
+        // 默认兜底：只暴露 Documents\AngelaLink，只读
         let mut roots = BTreeMap::new();
         if let Some(doc) = dirs::document_dir() {
-            roots.insert("bridge".to_string(), doc.join("MuseBridge"));
+            roots.insert("bridge".to_string(), doc.join("AngelaLink"));
         }
         Self {
             port: DEFAULT_PORT,
@@ -37,11 +38,46 @@ impl Default for BridgeConfig {
     }
 }
 
-/// `~/.muse-bridge`
+/// `~/.angela-link`
 pub fn bridge_home() -> PathBuf {
     dirs::home_dir()
         .unwrap_or_else(|| PathBuf::from("."))
+        .join(".angela-link")
+}
+
+/// 上游旧数据目录 `~/.muse-bridge`（仅用于首启迁移与过渡期保护）。
+pub fn legacy_bridge_home() -> PathBuf {
+    dirs::home_dir()
+        .unwrap_or_else(|| PathBuf::from("."))
         .join(".muse-bridge")
+}
+
+/// 首启迁移：新目录不存在且旧目录存在时，整目录复制到新目录，旧目录原样保留。
+/// 幂等且失败静默（迁移失败不挡启动，后续仍可从新目录全新生成配置）。
+pub fn migrate_legacy_home() {
+    let new_home = bridge_home();
+    let legacy = legacy_bridge_home();
+    if new_home.exists() || !legacy.is_dir() || new_home == legacy {
+        return;
+    }
+    if copy_dir_recursive(&legacy, &new_home).is_err() {
+        let _ = std::fs::remove_dir_all(&new_home);
+    }
+}
+
+fn copy_dir_recursive(from: &Path, to: &Path) -> std::io::Result<()> {
+    std::fs::create_dir_all(to)?;
+    for entry in std::fs::read_dir(from)? {
+        let entry = entry?;
+        let target = to.join(entry.file_name());
+        let kind = entry.file_type()?;
+        if kind.is_dir() {
+            copy_dir_recursive(&entry.path(), &target)?;
+        } else if kind.is_file() {
+            std::fs::copy(entry.path(), &target)?;
+        }
+    }
+    Ok(())
 }
 
 pub fn config_path() -> PathBuf {

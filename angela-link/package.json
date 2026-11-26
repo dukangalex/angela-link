@@ -1,14 +1,14 @@
 {
-  "name": "muse-connector",
+  "name": "angela-link",
   "private": true,
-  "version": "0.2.1",
-  "description": "MuseLink desktop UI for connecting Muse to authorized Windows files and optional sandboxed local commands.",
+  "version": "0.3.0",
+  "description": "AngelaLink （安渡） desktop UI for connecting any AI to authorized Windows files and optional sandboxed local commands.",
   "license": "MIT",
-  "homepage": "https://github.com/Aenvo/MuseLink",
+  "homepage": "https://github.com/dukangalex/angela-link",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Aenvo/MuseLink.git",
-    "directory": "muse-connector"
+    "url": "https://github.com/dukangalex/angela-link.git",
+    "directory": "angela-link"
   },
   "type": "module",
   "scripts": {

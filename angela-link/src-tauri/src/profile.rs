@@ -130,12 +130,12 @@ impl RuntimeProfile {
             return Err("未知运行 profile".into());
         }
         let home = if development {
-            std::env::var_os("MUSE_CONNECTOR_DEV_HOME")
+            std::env::var_os("ANGELA_LINK_DEV_HOME")
                 .map(PathBuf::from)
                 .unwrap_or_else(|| {
                     dirs::data_local_dir()
                         .unwrap_or_else(std::env::temp_dir)
-                        .join("MuseConnector")
+                        .join("AngelaLink")
                         .join(if onboarding_qa {
                             "onboarding-qa"
                         } else {

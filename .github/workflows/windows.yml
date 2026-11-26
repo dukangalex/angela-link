@@ -50,7 +50,7 @@ jobs:
         with:
           node-version: 22
           cache: pnpm
-          cache-dependency-path: muse-connector/pnpm-lock.yaml
+          cache-dependency-path: angela-link/pnpm-lock.yaml
 
       - name: Show toolchain
         run: |
@@ -62,16 +62,16 @@ jobs:
       - name: Cache Rust build
         uses: Swatinem/rust-cache@v2
         with:
-          workspaces: muse-connector/src-tauri
+          workspaces: angela-link/src-tauri
 
       - name: Check Rust formatting
-        run: cargo fmt --manifest-path muse-connector/src-tauri/Cargo.toml --all -- --check
+        run: cargo fmt --manifest-path angela-link/src-tauri/Cargo.toml --all -- --check
 
       - name: Install locked dependencies
-        run: pnpm -C muse-connector install --frozen-lockfile
+        run: pnpm -C angela-link install --frozen-lockfile
 
       - name: Build frontend
-        run: pnpm -C muse-connector build
+        run: pnpm -C angela-link build
 
       - name: Run Rust tests
-        run: cargo test --manifest-path muse-connector/src-tauri/Cargo.toml --locked
+        run: cargo test --manifest-path angela-link/src-tauri/Cargo.toml --locked

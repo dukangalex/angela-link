@@ -7,7 +7,7 @@
   的任何改动，先在隔离测试目录＋测试凭证下验证，再跑全量 cargo test。
 - 文件操作必须经 core/handle.rs 的已校验句柄路径（校验后对象变化返回 409），
   不许退回只按路径字符串操作。
-- 界面文案走 muse-connector/src/lib/i18n.tsx 与 messages.ts，中英文同步改。
+- 界面文案走 angela-link/src/lib/i18n.tsx 与 messages.ts，中英文同步改。
 - 环境选择不焊死进本体：设备名、隧道域名、更新源、令牌目录属部署配置。
 - 改用户流程/安装/构建命令时同步更新 README.md 与 README.en.md；
   功能更新同步记 CHANGELOG.md 与 CHANGELOG.en.md。

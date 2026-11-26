@@ -58,7 +58,7 @@ try {
     }
     Invoke-WebRequest -Uri 'https://www.voidtools.com/License.txt' -OutFile (Join-Path $vendor 'Everything-License.txt')
     Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/voidtools/ES/main/LICENSE' -OutFile (Join-Path $vendor 'ES-License.txt')
-    Copy-Item -LiteralPath $connector.FullName -Destination (Join-Path $stage 'muse-connector.exe')
+    Copy-Item -LiteralPath $connector.FullName -Destination (Join-Path $stage 'angela-link.exe')
 
     if ($NsisDestination) {
         $tauri = Join-Path $project 'src-tauri'
@@ -76,7 +76,7 @@ try {
         $resources["$targetRelative/THIRD_PARTY_NOTICES.md"] = 'THIRD_PARTY_NOTICES.md'
         $release = Join-Path $nsisTarget 'release'
         $null = [IO.Directory]::CreateDirectory($release)
-        Copy-Item -LiteralPath $connector.FullName -Destination (Join-Path $release 'muse-connector.exe')
+        Copy-Item -LiteralPath $connector.FullName -Destination (Join-Path $release 'angela-link.exe')
         $bundleConfig = Join-Path $nsisTarget 'resources.json'
         [IO.File]::WriteAllText($bundleConfig, (@{ bundle = @{ resources = $resources } } | ConvertTo-Json -Depth 4))
         $toolPaths = Get-Command cargo.exe,pnpm.cmd,node.exe | ForEach-Object { Split-Path -Parent $_.Source }
@@ -101,7 +101,7 @@ try {
     if (Test-Path -LiteralPath $destinationPath) { throw 'Destination already exists.' }
     $null = [IO.Directory]::CreateDirectory((Split-Path -Parent $destinationPath))
     $null = [IO.Directory]::CreateDirectory($destinationPath)
-    Copy-Item -LiteralPath (Join-Path $stage 'muse-connector.exe') -Destination $destinationPath
+    Copy-Item -LiteralPath (Join-Path $stage 'angela-link.exe') -Destination $destinationPath
     Copy-Item -LiteralPath $vendor -Destination $destinationPath -Recurse
     Copy-Item -LiteralPath $license -Destination $destinationPath
     Copy-Item -LiteralPath $notices -Destination $destinationPath

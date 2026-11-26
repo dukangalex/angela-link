@@ -192,7 +192,7 @@ pub struct ApiState {
 }
 
 impl ApiState {
-    /// 生产构造：沿用 ~/.muse-bridge 现有配置与令牌。
+    /// 生产构造：使用 ~/.angela-link 的配置与令牌（旧目录 ~/.muse-bridge 首启已迁移）。
     pub fn from_bridge_home() -> std::io::Result<(Self, broadcast::Receiver<String>)> {
         let cfg = BridgeConfig::load()?;
         let tok = token::load(&super::config::token_path())?;
@@ -2303,7 +2303,7 @@ mod tests {
     }
 
     /// 符号链接需要 SeCreateSymbolicLinkPrivilege（管理员或开发者模式）。
-    /// 缺权限时本机标为未覆盖；设置 `MUSE_CONNECTOR_REQUIRE_SYMLINK_TESTS=1` 时改为失败，
+    /// 缺权限时本机标为未覆盖；设置 `ANGELA_LINK_REQUIRE_SYMLINK_TESTS=1` 时改为失败，
     /// 供 CI 断言该用例确实执行，避免把跳过当成通过。
     #[cfg(windows)]
     #[tokio::test]
@@ -2317,7 +2317,7 @@ mod tests {
                 "符号链接创建失败且不是权限原因，不能将攻击矩阵判为通过: {error:?}"
             );
             assert!(
-                std::env::var_os("MUSE_CONNECTOR_REQUIRE_SYMLINK_TESTS").is_none(),
+                std::env::var_os("ANGELA_LINK_REQUIRE_SYMLINK_TESTS").is_none(),
                 "当前环境缺少创建符号链接的权限，symlink_escape 未覆盖: {error:?}"
             );
             eprintln!("symlink_escape 未覆盖：环境不允许创建符号链接（{error:?}）");

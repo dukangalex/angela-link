@@ -1,5 +1,5 @@
 //! 令牌：43 字符 base64url（32 随机字节），首字符避开 '-'。
-//! 与 Python 版同一文件（~/.muse-bridge/token），格式与轮换行为兼容。
+//! 存放在 ~/.angela-link/token（旧目录 ~/.muse-bridge 首启自动迁移），格式与轮换行为沿用上游。
 
 use std::path::Path;
 

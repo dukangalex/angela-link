@@ -337,7 +337,7 @@ async fn export_logs(
         .take(96)
         .collect();
     let file_name = if clean_name.is_empty() {
-        format!("muselink-logs.{ext}")
+        format!("angela-link-logs.{ext}")
     } else if clean_name
         .to_ascii_lowercase()
         .ends_with(&format!(".{ext}"))
@@ -627,8 +627,8 @@ fn public_http_client() -> Result<reqwest::Client, String> {
         .map_err(|_| "无法初始化 TLS 客户端".into())
 }
 fn update_configuration() -> Option<(String, String)> {
-    let endpoint = std::env::var("MUSE_CONNECTOR_UPDATE_ENDPOINT").ok()?;
-    let key = std::env::var("MUSE_CONNECTOR_UPDATE_PUBLIC_KEY").ok()?;
+    let endpoint = std::env::var("ANGELA_LINK_UPDATE_ENDPOINT").ok()?;
+    let key = std::env::var("ANGELA_LINK_UPDATE_PUBLIC_KEY").ok()?;
     parse_update_configuration(endpoint, key)
 }
 fn parse_update_configuration(endpoint: String, key: String) -> Option<(String, String)> {
@@ -758,6 +758,10 @@ pub fn run() {
             return;
         }
     };
+    if !profile.is_development() {
+        // 生产 profile 首启先把上游旧数据目录迁移到 ~/.angela-link，再读配置与令牌。
+        crate::core::config::migrate_legacy_home();
+    }
     let mut context = tauri::generate_context!();
     if profile.is_development() {
         let suffix = if profile.onboarding_qa {
@@ -766,7 +770,7 @@ pub fn run() {
             ".development"
         };
         context.config_mut().identifier.push_str(suffix);
-        if profile.onboarding_qa && std::env::var_os("MUSE_CONNECTOR_DEV_HOME").is_some() {
+        if profile.onboarding_qa && std::env::var_os("ANGELA_LINK_DEV_HOME").is_some() {
             context
                 .config_mut()
                 .identifier

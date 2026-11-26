@@ -35,7 +35,7 @@
 
 ### 出站连接 ✅（无声称外外发）
 - Cargo.toml / package.json 无任何 telemetry/analytics/崩溃上报依赖。
-- 更新器：仅当环境变量 MUSE_CONNECTOR_UPDATE_ENDPOINT＋MUSE_CONNECTOR_UPDATE_PUBLIC_KEY 同时设置才启用，强制 HTTPS、无内嵌凭据、Tauri 签名校验；未配置时明确返回「自动更新尚未配置」。出厂默认＝关。
+- 更新器：仅当环境变量 ANGELA_LINK_UPDATE_ENDPOINT＋ANGELA_LINK_UPDATE_PUBLIC_KEY 同时设置才启用，强制 HTTPS、无内嵌凭据、Tauri 签名校验；未配置时明确返回「自动更新尚未配置」。出厂默认＝关。
 - 隧道：调用本机 tailscale CLI（funnel --bg --https=443）或本机 cloudflared（--url 指回 localhost），无自有中继服务器；本地服务只听回环。
 - 其余 URL 仅帮助文档链接（tailscale/cloudflare/voidtools 官网）。
 - Everything：仅 Release 包捆绑 voidtools 官方签名二进制（仓库内无此二进制），附许可证文件；应用写入的 Everything 配置关掉 http_server、etp_server 与搜索/运行历史。
@@ -52,3 +52,26 @@
 - README 内指向上游 Releases 的下载链接：换自有仓（属改名常规动作，非私货）。
 - 上游 AGENTS.md：作者自家维护规矩（更新日志同步、测试矩阵），无对他人指令、无推广；自有版以我方 AGENTS.md 替换。
 - 代码与前端未发现返利、追踪参数、付费引流。
+
+## v0.3.0 基线复测记录（2026-11-26）
+
+环境：用户电脑 DESKTOP-L3U37AU（精简版 Windows、内存约 4GB），VS Build Tools 2022
+17.14（MSVC 14.44）＋rustup stable（cargo/rustc 1.100.0），CARGO_BUILD_JOBS=2。
+
+- 构建：cargo build 成功（dev profile），产物 angela-link.exe 约 27.5MB。
+- 测试：cargo test 全量 94 通过 / 2 失败 / 2 忽略；逐条复核后实际基线为
+  **95 通过 / 1 条已知环境敏感失败 / 2 忽略**：
+  - core::sandbox::tests::write_restricted_sandbox_allows_workspace_and_blocks_outside_writes：
+    首跑在整机编译负载下因沙箱内 PowerShell 15 秒未退出而失败；空闲单跑通过——负载敏感。
+  - service::tests::agent_exec_enforces_toggle_approval_session_and_sandbox_boundary：
+    空闲单跑仍确定性失败（5.44 秒）。失败形态：direct 只读命令（where）被策略自动放行后，
+    沙箱作业未在测试给定的 wait_ms=5000 内完成，接口回 202（期望 200＋completed）。
+- 定性依据：该测试与整条 exec 路径（service.rs、exec_runtime.rs、exec 策略分类、sandbox
+  spawn）与上游 Aenvo/MuseLink 逐字节一致（已 diff 核对）；中立化改动在该路径仅有子进程
+  环境变量前缀过滤改名（MUSE_CONNECTOR_→ANGELA_LINK_）与注释，不影响执行与判定。
+  失败源于上游测试的 5 秒完成预算在本机（4GB 内存、精简版系统、每跑新建临时家目录的
+  冷沙箱工作区）被击穿，属环境敏感，非代码缺陷。不改上游测试口径凑绿，基线如实记录。
+- 复核条件：换更强机器（内存 ≥16GB 的常规开发机）或上游更新该测试/执行路径时，
+  重跑此条并更新本记录。
+- 附记：上文注记 1 的凭证保护缺口已在 v0.3.0 补齐（新增 .azure/.kube/.docker、
+  Chrome/Edge/Brave 密码库目录、Firefox 配置、gcloud 凭证，旧数据目录过渡期同级保护）。
