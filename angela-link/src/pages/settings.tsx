@@ -83,7 +83,7 @@ export default function Settings({
                     ? t("开发模式不修改正式自启项。")
                     : s.autostart === null
                       ? t("无法读取系统注册状态，请稍后重试。")
-                      : t("开启后 Muse连接器 会在你登录电脑后自动启动")}
+                      : t("开启后 AngelaLink 会在你登录电脑后自动启动")}
                 </FieldDescription>
               </FieldContent>
               <Switch
@@ -96,7 +96,7 @@ export default function Settings({
             <Field orientation="horizontal">
               <FieldContent>
                 <FieldLabel htmlFor="close-to-tray">{t("关闭时最小化到托盘")}</FieldLabel>
-                <FieldDescription>{t("关闭 Muse连接器 时自动最小化到托盘，不会退出。")}</FieldDescription>
+                <FieldDescription>{t("关闭 AngelaLink 时自动最小化到托盘，不会退出。")}</FieldDescription>
               </FieldContent>
               <Switch
                 id="close-to-tray"
@@ -161,7 +161,7 @@ export default function Settings({
                   disabled={!!busy}
                   onClick={() => confirm({
                     title: t("清除本机索引？"),
-                    description: t("将清除连接器的搜索索引。下次使用 Muse 搜索前，需要手动重新建立索引。"),
+                    description: t("将清除连接器的搜索索引。下次使用 AI 搜索前，需要手动重新建立索引。"),
                     action: t("清除索引"),
                     execute: async () => (await run(t("正在清除本机索引"), "clear_search_index", undefined, t("本机索引已清除"))).ok,
                   })}

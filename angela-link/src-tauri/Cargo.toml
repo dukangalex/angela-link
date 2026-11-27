@@ -1,6 +1,6 @@
 [package]
 name = "angela-link"
-version = "0.3.0"
+version = "0.3.1"
 description = "AngelaLink （安渡） connects any AI to authorized Windows files and optional sandboxed local commands."
 license = "MIT"
 repository = "https://github.com/dukangalex/angela-link"

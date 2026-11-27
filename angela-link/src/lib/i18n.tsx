@@ -17,7 +17,7 @@ const diagnosticPatterns = [
 export function LanguageProvider({ language, children }: { language: Language; children: ReactNode }) {
   useEffect(() => {
     document.documentElement.lang = language;
-    document.title = language === "en" ? english["Muse连接器"] : "Muse连接器";
+    document.title = language === "en" ? english["AngelaLink · 安渡"] : "AngelaLink · 安渡";
   }, [language]);
 
   return <LanguageContext.Provider value={language}>{children}</LanguageContext.Provider>;

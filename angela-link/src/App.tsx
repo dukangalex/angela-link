@@ -171,7 +171,7 @@ function AppContent({ bridge }: { bridge: BridgeModel }) {
   return <TooltipProvider><main className="flex h-dvh flex-col" style={{ "--setup-guide-space": `${guideSpace}px` } as CSSProperties}>
     <header className="app-shell app-header flex shrink-0 items-center justify-between gap-3">
       <div className="flex min-w-0 flex-col gap-2">
-        <div className="flex flex-wrap items-center gap-3"><h1 className="text-xl leading-7 font-semibold">{t("Muse连接器")}</h1>{s ? <Badge variant="outline">{s.profile === "development" ? t("开发隔离") : `v${s.version}`}</Badge> : null}</div>
+        <div className="flex flex-wrap items-center gap-3"><h1 className="text-xl leading-7 font-semibold">{t("AngelaLink · 安渡")}</h1>{s ? <Badge variant="outline">{s.profile === "development" ? t("开发隔离") : `v${s.version}`}</Badge> : null}</div>
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1" role="status" aria-atomic="true"><StatusBadge tone={presentation.tone} pending={presentation.pending}>{presentation.label}</StatusBadge>{connectionDirty ? <span className="text-caption text-muted-foreground">{t("连接草稿未应用")}</span> : null}</div>
       </div>
       {showConnectionControl ? <Button disabled={!s || transitional || (paused && (!!s.setup_error || !!busy || (s.profile === "production" && !providerToolAvailable(s))))} onClick={() => void bridge.run(paused ? "startConnection" : "pauseConnection", "toggle_connection", { enable: paused }, paused ? undefined : t("本应用连接已暂停"))}>

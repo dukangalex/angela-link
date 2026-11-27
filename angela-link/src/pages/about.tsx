@@ -5,10 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
-const githubRepositoryUrl = "https://github.com/Aenvo/MuseLink";
+const githubRepositoryUrl = "https://github.com/dukangalex/angela-link";
 const changelogUrls = {
-  "zh-CN": "https://github.com/Aenvo/MuseLink/blob/main/CHANGELOG.md",
-  en: "https://github.com/Aenvo/MuseLink/blob/main/CHANGELOG.en.md",
+  "zh-CN": "https://github.com/dukangalex/angela-link/blob/main/CHANGELOG.md",
+  en: "https://github.com/dukangalex/angela-link/blob/main/CHANGELOG.en.md",
 } as const;
 
 export default function About({ version, onError }: { version: string; onError: (message: string) => void }) {
@@ -33,7 +33,7 @@ export default function About({ version, onError }: { version: string; onError: 
       <div className="flex min-w-0 items-center gap-3">
         <img src={appIcon} alt="" width={48} height={48} className="size-12 shrink-0" />
         <div className="min-w-0">
-          <CardTitle id="about-title">{t("Muse连接器")}</CardTitle>
+          <CardTitle id="about-title">{t("AngelaLink · 安渡")}</CardTitle>
           <CardDescription>{t("版本 v{0}", version)}</CardDescription>
         </div>
       </div>
@@ -48,7 +48,7 @@ export default function About({ version, onError }: { version: string; onError: 
     </CardHeader>
     <Separator />
     <CardFooter className="bg-muted/35 py-4">
-      <p>{t("如果 Muse连接器帮到了你，欢迎在 GitHub 点个 Star :)")}</p>
+      <p>{t("如果 AngelaLink 帮到了你，欢迎在 GitHub 点个 Star :)")}</p>
     </CardFooter>
   </Card>;
 }

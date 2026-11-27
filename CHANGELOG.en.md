@@ -4,6 +4,12 @@
 
 This changelog tracks feature updates, security hardening, and bug fixes for AngelaLink, kept in sync with repository pushes and releases.
 
+## [v0.3.1] - 2026-11-26
+
+### Fixed
+- **Runtime product name and UI copy caught up**: v0.3.0 renamed the product only in packaging config; the runtime window title, home and About headings, settings copy, and the product name inside generated agent setup instructions still showed the upstream name (MuseLink). All now read AngelaLink (Chinese UI: AngelaLink · 安渡), in both languages; the About page's GitHub and changelog links now point to dukangalex/angela-link instead of the upstream repository.
+- Trial note: by upstream design, debug builds always run in the development-isolation profile (simulated tunnel, production settings locked). Real trials and use require a release build (`pnpm tauri build`, embedded frontend, production profile).
+
 ## [v0.3.0] - 2026-11-26
 
 ### Self-ownership & neutralization

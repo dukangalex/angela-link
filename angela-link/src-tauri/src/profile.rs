@@ -52,7 +52,7 @@ impl Language {
     }
 
     pub fn product_name(self) -> &'static str {
-        self.text("Muse连接器", "MuseLink")
+        self.text("AngelaLink · 安渡", "AngelaLink")
     }
 }
 
@@ -326,7 +326,7 @@ mod tests {
         assert!(reopened.start_minimized);
         assert_eq!(
             profile.window_title(reopened.language),
-            "MuseLink · Development"
+            "AngelaLink · Development"
         );
         assert!(!DesktopState::default().start_minimized);
         assert!(DesktopState::default().close_to_tray);
