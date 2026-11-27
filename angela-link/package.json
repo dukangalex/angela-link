@@ -1,8 +1,8 @@
 {
   "name": "angela-link",
   "private": true,
-  "version": "0.3.1",
-  "description": "AngelaLink （安渡） desktop UI for connecting any AI to authorized Windows files and optional sandboxed local commands.",
+  "version": "0.3.2",
+  "description": "AngelaLink （番禺） desktop UI for connecting any AI to authorized Windows files and optional sandboxed local commands.",
   "license": "MIT",
   "homepage": "https://github.com/dukangalex/angela-link",
   "repository": {

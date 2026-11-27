@@ -33,7 +33,7 @@ export default function About({ version, onError }: { version: string; onError: 
       <div className="flex min-w-0 items-center gap-3">
         <img src={appIcon} alt="" width={48} height={48} className="size-12 shrink-0" />
         <div className="min-w-0">
-          <CardTitle id="about-title">{t("AngelaLink · 安渡")}</CardTitle>
+          <CardTitle id="about-title">{t("AngelaLink · 番禺")}</CardTitle>
           <CardDescription>{t("版本 v{0}", version)}</CardDescription>
         </div>
       </div>

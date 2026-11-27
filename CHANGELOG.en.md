@@ -4,6 +4,11 @@
 
 This changelog tracks feature updates, security hardening, and bug fixes for AngelaLink, kept in sync with repository pushes and releases.
 
+## [v0.3.2] - 2026-11-26
+
+### Renamed
+- **Chinese alias changed from Andu （安渡） to Fanyu （番禺）**: the self-owned projects' Chinese aliases now draw on the Classic of Mountains and Seas; Fanyu, from the Classic's Inner Seas chapter, was the first maker of boats and patron of crossings — a fitting name for a bridge that ferries an AI through your own tunnel. All display surfaces (README, window title, UI copy, package descriptions) updated; the English name AngelaLink, the repository name, and code identifiers are unchanged, and there are no functional or security changes. The old alias remains untouched in historical entries below.
+
 ## [v0.3.1] - 2026-11-26
 
 ### Fixed

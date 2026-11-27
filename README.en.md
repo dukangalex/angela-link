@@ -1,4 +1,4 @@
-# AngelaLink — a local bridge for any AI (Chinese alias: 安渡 / Andu, "safe crossing")
+# AngelaLink — a local bridge for any AI (Chinese alias: 番禺 / Fanyu — the first boat-maker in the Classic of Mountains and Seas, patron of crossings)
 
 Let an AI work with files on your Windows PC inside folders you authorize,
 and optionally run project commands inside a write-restricted sandbox with

@@ -52,7 +52,7 @@ impl Language {
     }
 
     pub fn product_name(self) -> &'static str {
-        self.text("AngelaLink · 安渡", "AngelaLink")
+        self.text("AngelaLink · 番禺", "AngelaLink")
     }
 }
 

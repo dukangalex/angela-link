@@ -15,7 +15,7 @@ export const english = {
   "测试公网健康": "Test public endpoint",
   "正在测试公网": "Testing public endpoint",
   "公网健康接口已验证": "Public health check passed",
-  "AngelaLink · 安渡": "AngelaLink",
+  "AngelaLink · 番禺": "AngelaLink",
   "开发隔离": "Development",
   "连接草稿未应用": "Unapplied connection draft",
   "本应用连接已暂停": "Connection paused",
